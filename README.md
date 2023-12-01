@@ -1,1 +1,1 @@
-# Smartwatch Data Analysis Inteface
+# Smartwatch Data Analysis Interface
