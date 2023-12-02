@@ -1,1 +1,1 @@
-# smartwatch-ihc
+# Smartwatch Data Analysis Interface
