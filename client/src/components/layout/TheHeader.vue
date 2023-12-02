@@ -16,5 +16,6 @@ header {
     padding: 1rem;
     display: flex;
     align-items: center;
+    box-shadow: 0 1px 10px #ccc;
 }
 </style>
