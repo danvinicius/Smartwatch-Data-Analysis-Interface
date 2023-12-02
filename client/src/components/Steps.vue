@@ -1,5 +1,5 @@
 <template>
-    <section class="container">
+    <section class="container animeLeft second">
         <TheTitle>Passos e corrida</TheTitle>
         <div id="chart">
             <apexchart type="bar" height="380" :options="chartOptions" :series="series"></apexchart>

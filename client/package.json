@@ -12,7 +12,8 @@
     "apexcharts": "^3.44.0",
     "dayjs": "^1.11.10",
     "vue": "^3.3.8",
-    "vue3-apexcharts": "^1.4.4"
+    "vue3-apexcharts": "^1.4.4",
+    "vite-svg-loader": "^5.1.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.5.0",

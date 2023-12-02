@@ -1,5 +1,5 @@
 <template>
-    <section class="container">
+    <section class="container animeLeft fourth">
         <TheTitle>Bioimpedância</TheTitle>
     </section>
 </template>

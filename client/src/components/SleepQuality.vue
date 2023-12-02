@@ -1,5 +1,5 @@
 <template>
-    <section class="container">
+    <section class="container animeLeft third">
         <TheTitle>Qualidade do sono</TheTitle>
         <div id="chart">
             <apexchart type="rangeBar" height="350" :options="chartOptions" :series="series"></apexchart>
