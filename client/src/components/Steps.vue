@@ -1,5 +1,5 @@
 <template>
-    <section class="container">
+    <section class="container animeLeft second">
         <TheTitle>Passos e corrida</TheTitle>
     </section>
 </template>

@@ -1,5 +1,5 @@
 <template>
-    <section class="container">
+    <section class="container animeLeft third">
         <TheTitle>Qualidade do sono</TheTitle>
     </section>
 </template>

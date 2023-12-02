@@ -10,7 +10,7 @@
 
 <style scoped lang="scss">
 h2 {
-    font-family: var(--type-second);
+    font-family: var(--type-first);
     line-height: 1;
     font-size: 2rem;
     margin: 1rem 0;

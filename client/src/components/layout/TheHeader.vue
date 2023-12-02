@@ -1,10 +1,11 @@
 <template>
-    <header class="container">
-
+    <header>
+        <Logo></Logo>
     </header>
 </template>
 
 <script setup lang="ts">
+import Logo from "../../assets/logo.svg";
 
 </script>
 
@@ -12,6 +13,8 @@
 header {
     background: #fff;
     width: 100%;
-    height: 5rem;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
 }
 </style>
