@@ -1,10 +1,14 @@
 <template>
   <TheHeader></TheHeader>
-  <PeriodSelector></PeriodSelector>
-  <CardiacData></CardiacData>
-  <Steps></Steps>
-  <SleepQuality></SleepQuality>
-  <Bioimpedance></Bioimpedance>
+  <div class="periodSelectorContainer">
+    <PeriodSelector></PeriodSelector>
+  </div>
+  <main>
+    <CardiacData></CardiacData>
+    <Steps></Steps>
+    <SleepQuality></SleepQuality>
+    <Bioimpedance></Bioimpedance>
+  </main>
   <TheFooter></TheFooter>
 </template>
 
@@ -19,4 +23,7 @@ import Bioimpedance from './components/Bioimpedance.vue';
 </script>
 
 <style scoped>
+.periodSelectorContainer {
+  padding: 1rem;
+}
 </style>
