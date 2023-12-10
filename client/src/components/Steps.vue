@@ -1,15 +1,22 @@
 <template>
     <section class="container animeLeft second">
         <TheTitle>Passos e corrida</TheTitle>
-        <div id="chart">
-            <apexchart type="bar" height="380" :options="chartOptions" :series="series"></apexchart>
-        </div>
+        <VaCollapse
+            v-model="value"
+            class="min-w-96"
+            header="Dados numéricos"
+        >
+            <div id="chart">
+                <apexchart type="bar" height="380" :options="chartOptions" :series="series"></apexchart>
+            </div>
+        </VaCollapse>
     </section>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import TheTitle from './layout/TheTitle.vue';
-
+const value = ref(false)
 const series = ([
     {
     name: 'passos',

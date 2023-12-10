@@ -1,20 +1,27 @@
 <template>
     <section class="container animeLeft first">
         <TheTitle>Dados cardíacos</TheTitle>
-        <div id="wrapper">
-            <div id="chart-line2">
-                <apexchart type="line" height="230" :options="chartOptions" :series="series"></apexchart>
-            </div>
-            <div id="chart-line">
-                <apexchart type="area" height="130" :options="chartOptionsLine" :series="seriesLine"></apexchart>
-            </div>
-        </div>
+        <VaCollapse
+            v-model="value"
+            class="min-w-96"
+            header="Dados numéricos"
+        >
+          <div id="wrapper">
+              <div id="chart-line2">
+                  <apexchart type="line" height="230" :options="chartOptions" :series="series"></apexchart>
+              </div>
+              <div id="chart-line">
+                  <apexchart type="area" height="130" :options="chartOptionsLine" :series="seriesLine"></apexchart>
+              </div>
+          </div>
+        </VaCollapse>
     </section>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import TheTitle from './layout/TheTitle.vue';
-
+const value = ref(false)
 const generateDayWiseTimeSeries = (baseval:any, count:any, yrange:any) => {
     var i = 0;
     var series = [];
