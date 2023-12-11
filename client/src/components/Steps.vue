@@ -1,7 +1,8 @@
 <template>
     <section class="container animeLeft second">
         <TheTitle>Passos</TheTitle>
-        <div class="flex align-start gap-1 flex-column margin-bottom-1">
+        <Loading v-if="loading"></Loading>
+        <div v-else class="flex align-start gap-1 flex-column margin-bottom-1">
             <div class="flex align-center gap-5">
                 <Steps class="icon"></Steps>
                 <span class="data">
@@ -12,12 +13,6 @@
                 <PersonRunning class="icon"></PersonRunning>
                 <span class="data">
                     {{ mostRecentDistanceSumValue.toFixed(2) }} m
-                </span>
-            </div>
-            <div class="flex align-center gap-5" v-if="mostRecentSpeed">
-                <Speed class="icon"></Speed>
-                <span class="data">
-                     {{ (mostRecentSpeed * 3.6).toFixed(2) }} km/h
                 </span>
             </div>
         </div>
@@ -34,7 +29,9 @@ import { onMounted, ref } from 'vue';
 import TheTitle from './layout/TheTitle.vue';
 import PersonRunning from '../assets/icons/person-running.svg'
 import Steps from '../assets/icons/steps.svg'
-import Speed from '../assets/icons/speed.svg'
+import { useApi } from '../composables/useApi';
+const { fetchStepCountRate, fetchDistanceRate } = useApi()
+import Loading from './layout/Loading.vue';
 
 import { useData } from '../composables/useData';
 const { groupDataByDay, useChartData } = useData()
@@ -46,37 +43,19 @@ const series = ref<any[]>([]);
 
 const mostRecentStepCount = ref()
 const mostRecentStepCountSumValue = ref(0)
-const mostRecentSpeed = ref()
 const mostRecentDistance = ref()
 const mostRecentDistanceSumValue = ref(0)
+const loading = ref(false);
 
 onMounted(async () => {
-    const stepCountResponse = await fetch('src/api/step-count.json', {
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-    })
-    const stepCountResponseData = await stepCountResponse.json();
+    loading.value = true;
+    const [stepCountResponseDataPromise, distanceResponseDataPromise] = [fetchStepCountRate, fetchDistanceRate]
+    const [stepCountResponseData, distanceResponseData] = await Promise.all([stepCountResponseDataPromise(), distanceResponseDataPromise()])
+    loading.value = false;
+
     const stepCountGroupedData = groupDataByDay(stepCountResponseData.data);
     const stepCountChartData = useChartData(stepCountGroupedData)
 
-    const speedResponse = await fetch('src/api/speed.json', {
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-    })
-    const speedResponseData = await speedResponse.json();
-    mostRecentSpeed.value = speedResponseData.data[speedResponseData.data.length-1].value
-
-    const distanceResponse = await fetch('src/api/distance.json', {
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-    })
-    const distanceResponseData = await distanceResponse.json();
     const distanceGroupedData = groupDataByDay(distanceResponseData.data);
     const distanceChartData = useChartData(distanceGroupedData)
 

@@ -7,16 +7,17 @@ export interface ResponseData {
   data: DataPoint[];
 }
 
+export interface BMI {
+  weight: number;
+  height: number;
+  imc: number;
+}
+
 const url = "http://localhost:8080/api/data";
 
 export function useApi() {
   const fetchHeartRate = async (): Promise<ResponseData> => {
     const res = await fetch(`${url}/rate/heart`);
-    const json = await res.json();
-    return json;
-  };
-  const fetchSpeedRate = async (): Promise<ResponseData> => {
-    const res = await fetch(`${url}/rate/speed`);
     const json = await res.json();
     return json;
   };
@@ -27,9 +28,7 @@ export function useApi() {
   };
   async function fetchStepCountRate (): Promise<ResponseData> {
     const res = await fetch(`${url}/rate/step-count`);
-    console.log(res);
     const json = await res.json();
-    console.log(json);
     return json;
   };
   const fetchCaloriesRate = async (): Promise<ResponseData> => {
@@ -38,7 +37,7 @@ export function useApi() {
     const json = await res.json();
     return json;
   };
-  const fetchBMI = async (): Promise<ResponseData> => {
+  const fetchBMI = async (): Promise<BMI> => {
     const res = await fetch(`${url}/bioimpedance`);
     const json = await res.json();
     return json;
@@ -46,7 +45,6 @@ export function useApi() {
 
   return {
     fetchHeartRate,
-    fetchSpeedRate,
     fetchDistanceRate,
     fetchStepCountRate,
     fetchCaloriesRate,
