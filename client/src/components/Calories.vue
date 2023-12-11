@@ -65,6 +65,9 @@ onMounted(async () => {
 const value = ref(false)
 
 const chartOptions = ({
+    dataLabels: {
+        enabled: false,
+    },
     chart: {
         type: 'bar',
         height: 380,
