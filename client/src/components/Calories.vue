@@ -1,7 +1,7 @@
 <template>
     <section class="container animeLeft third">
         <TheTitle>Calorias</TheTitle>
-        <div class="flex">
+        <div class="flex margin-bottom-1">
             <div class="flex align-center gap-5">
                 <Fire></Fire>
                 <span class="data">
@@ -9,16 +9,21 @@
                 </span>
             </div>
         </div>
-        <div id="chart">
-            <apexchart type="rangeBar" height="350" :options="chartOptions" :series="series"></apexchart>
-        </div>
+        <VaCollapse v-model="value" class="min-w-96" header="Ver histórico de calorias">
+            <div id="chart">
+                <apexchart type="rangeBar" height="350" :options="chartOptions" :series="series"></apexchart>
+            </div>
+        </VaCollapse>
+
     </section>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import TheTitle from './layout/TheTitle.vue';
 import Fire from '../assets/icons/fire.svg'
 
+const value = ref(false)
 const series = ([
     {
         data: [

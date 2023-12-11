@@ -10,29 +10,34 @@
       </div>
     </div>
 
-    <div class="info">
+    <div class="info margin-bottom-1">
       <p v-if="heartRate >= 50 && heartRate <= 90">Seu batimento cardíaco está <span class="normal">normal.</span></p>
-      <p v-else-if="heartRate < 50">Seu batimento cardíaco está <span class="not-normal">abaixo do normal.</span> Procure um profissional de saúde.</p>
-      <p v-else-if="heartRate > 90">Seu batimento cardíaco está <span class="not-normal">acima do normal.</span> Procure um profissional de saúde.</p>
+      <p v-else-if="heartRate < 50">Seu batimento cardíaco está <span class="not-normal">abaixo do normal.</span> Procure
+        um profissional de saúde.</p>
+      <p v-else-if="heartRate > 90">Seu batimento cardíaco está <span class="not-normal">acima do normal.</span> Procure
+        um profissional de saúde.</p>
     </div>
 
-    <div class="chart-wrapper">
-      <div id="chart-line2">
-        <apexchart type="line" height="230" :options="chartOptions" :series="series"></apexchart>
+    <VaCollapse v-model="value" class="min-w-96" header="Ver histórico cardíaco">
+      <div id="wrapper">
+        <div id="chart-line2">
+          <apexchart type="line" height="230" :options="chartOptions" :series="series"></apexchart>
+        </div>
+        <div id="chart-line">
+          <apexchart type="area" height="130" :options="chartOptionsLine" :series="seriesLine"></apexchart>
+        </div>
       </div>
-      <div id="chart-line">
-        <apexchart type="area" height="130" :options="chartOptionsLine" :series="seriesLine"></apexchart>
-      </div>
-    </div>
+    </VaCollapse>
   </section>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import TheTitle from './layout/TheTitle.vue';
 import Heart from '../assets/icons/heart.svg'
-import { ref } from 'vue';
 
 const heartRate = ref(91);
+const value = ref(false)
 
 const generateDayWiseTimeSeries = (baseval: any, count: any, yrange: any) => {
   var i = 0;
@@ -131,5 +136,4 @@ const chartOptionsLine = ({
 
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
