@@ -43,7 +43,6 @@ onMounted(async () => {
         
         caloriesRate.value = groupedData;
         
-        // Criar o array de objetos {x, y} para o gráfico
         const chartData = Object.keys(groupedData).map((date: any) => {
             const sum = groupedData[date].reduce((acc, point) => acc + point.value, 0);
             return { x: date, y: sum.toFixed(2) };

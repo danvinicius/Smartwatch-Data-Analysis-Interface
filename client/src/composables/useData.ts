@@ -20,7 +20,18 @@ export const useData = () => {
     return groupedData;
   };
 
+  const useChartData = (groupedData: any) => {
+    return Object.keys(groupedData).map((date) => {
+      const sum = groupedData[date].reduce(
+        (acc: number, point: {value: number}) => acc + point.value,
+        0
+      );
+      return { x: date, y: Math.floor(sum) };
+    });
+  };
+
   return {
     groupDataByDay,
+    useChartData
   };
 };

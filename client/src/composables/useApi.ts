@@ -44,7 +44,6 @@ export function useApi() {
     return json;
   };
 
-  // expose managed state as return value
   return {
     fetchHeartRate,
     fetchSpeedRate,

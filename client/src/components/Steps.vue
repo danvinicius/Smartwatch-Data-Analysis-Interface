@@ -5,19 +5,19 @@
             <div class="flex align-center gap-5">
                 <Steps class="icon"></Steps>
                 <span class="data">
-                    {{ mostRecentStepCountSumValue }} passos
+                    {{ mostRecentStepCountSumValue.toFixed(0) }} passos
                 </span>
             </div>
             <div class="flex align-center gap-5">
                 <PersonRunning class="icon"></PersonRunning>
                 <span class="data">
-                    {{ 19 }} km
+                    {{ mostRecentDistanceSumValue.toFixed(2) }} m
                 </span>
             </div>
-            <div class="flex align-center gap-5">
+            <div class="flex align-center gap-5" v-if="mostRecentSpeed">
                 <Speed class="icon"></Speed>
                 <span class="data">
-                    {{ 24 }} km/h
+                     {{ (mostRecentSpeed * 3.6).toFixed(2) }} km/h
                 </span>
             </div>
         </div>
@@ -37,48 +37,77 @@ import Steps from '../assets/icons/steps.svg'
 import Speed from '../assets/icons/speed.svg'
 
 import { useData } from '../composables/useData';
-const { groupDataByDay } = useData()
+const { groupDataByDay, useChartData } = useData()
 
 const stepCountRate = ref<any>();
+const distanceRate = ref<any>();
 
 const series = ref<any[]>([]);
 
 const mostRecentStepCount = ref()
 const mostRecentStepCountSumValue = ref(0)
+const mostRecentSpeed = ref()
+const mostRecentDistance = ref()
+const mostRecentDistanceSumValue = ref(0)
 
 onMounted(async () => {
-    const response = await fetch('src/api/step-count.json', {
+    const stepCountResponse = await fetch('src/api/step-count.json', {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         }
     })
-    const responseData = await response.json();
-    if (responseData && responseData?.data) {
-        const groupedData = groupDataByDay(responseData.data);
+    const stepCountResponseData = await stepCountResponse.json();
+    const stepCountGroupedData = groupDataByDay(stepCountResponseData.data);
+    const stepCountChartData = useChartData(stepCountGroupedData)
 
-        stepCountRate.value = groupedData;
+    const speedResponse = await fetch('src/api/speed.json', {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    })
+    const speedResponseData = await speedResponse.json();
+    mostRecentSpeed.value = speedResponseData.data[speedResponseData.data.length-1].value
 
-        const chartData = Object.keys(groupedData).map((date) => {
-            const sum = groupedData[date].reduce((acc, point) => acc + point.value, 0);
-            return { x: date, y: sum };
-        });
+    const distanceResponse = await fetch('src/api/distance.json', {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    })
+    const distanceResponseData = await distanceResponse.json();
+    const distanceGroupedData = groupDataByDay(distanceResponseData.data);
+    const distanceChartData = useChartData(distanceGroupedData)
 
-        series.value.push({
-            name: 'passos',
-            data: chartData,
-        });
+    stepCountRate.value = stepCountGroupedData;
+    distanceRate.value = distanceGroupedData;
 
-        mostRecentStepCount.value = Object.entries(stepCountRate.value)[Object.entries(stepCountRate.value).length - 1][1]
-        mostRecentStepCount.value.forEach((sc: any) => {
-            mostRecentStepCountSumValue.value += sc.value
-        })
-    }
+
+    series.value.push({
+        name: 'passos',
+        data: stepCountChartData,
+    }, {
+        name: 'distância',
+        data: distanceChartData,
+    });
+
+    mostRecentStepCount.value = Object.entries(stepCountRate.value)[Object.entries(stepCountRate.value).length - 1][1]
+    mostRecentStepCount.value.forEach((sc: any) => {
+        mostRecentStepCountSumValue.value += sc.value
+    })
+    mostRecentDistance.value = Object.entries(distanceRate.value)[Object.entries(distanceRate.value).length - 1][1]
+    mostRecentDistance.value.forEach((sc: any) => {
+        mostRecentDistanceSumValue.value += sc.value
+    })
 });
 
 const isActive = ref(false)
 
 const chartOptions = ({
+    dataLabels: {
+        enabled: false,
+    },
     chart: {
         type: 'bar',
         height: 380,
