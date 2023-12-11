@@ -5,13 +5,13 @@
             <div class="flex align-center gap-5" v-if="bmi">
                 <Weight></Weight>
                 <span class="data">
-                    {{ bmi.weight }}kg
+                    {{ bmi.weight.toFixed(1) }}kg
                 </span>
             </div>
             <div class="flex align-center gap-5" v-if="bmi">
                 <Height></Height>
                 <span class="data">
-                    {{ bmi.height }}m
+                    {{ bmi.height.toFixed(2) }}m
                 </span>
             </div>
         </div>
@@ -50,8 +50,9 @@ onMounted(async () => {
         }
     })
     const responseData = await response.json();
-    if (responseData && responseData.data) {
-        bmi.value = responseData.data;
+    
+    if (responseData) {
+        bmi.value = responseData;
     }
 })
 </script>

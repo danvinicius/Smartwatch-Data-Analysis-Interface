@@ -3,15 +3,15 @@
         <TheTitle>Passos</TheTitle>
         <div class="flex align-start gap-1 flex-column margin-bottom-1">
             <div class="flex align-center gap-5">
-                <PersonRunning class="icon"></PersonRunning>
-                <span class="data">
-                    {{ 19 }} km
-                </span>
-            </div>
-            <div class="flex align-center gap-5">
                 <Steps class="icon"></Steps>
                 <span class="data">
                     {{ mostRecentStepCountSumValue }} passos
+                </span>
+            </div>
+            <div class="flex align-center gap-5">
+                <PersonRunning class="icon"></PersonRunning>
+                <span class="data">
+                    {{ 19 }} km
                 </span>
             </div>
             <div class="flex align-center gap-5">
@@ -59,7 +59,6 @@ onMounted(async () => {
 
         stepCountRate.value = groupedData;
 
-        // Criar o array de objetos {x, y} para o gráfico
         const chartData = Object.keys(groupedData).map((date) => {
             const sum = groupedData[date].reduce((acc, point) => acc + point.value, 0);
             return { x: date, y: sum };
@@ -70,7 +69,7 @@ onMounted(async () => {
             data: chartData,
         });
 
-        mostRecentStepCount.value = Object.entries(stepCountRate.value)[Object.entries(stepCountRate.value).length-1][1]
+        mostRecentStepCount.value = Object.entries(stepCountRate.value)[Object.entries(stepCountRate.value).length - 1][1]
         mostRecentStepCount.value.forEach((sc: any) => {
             mostRecentStepCountSumValue.value += sc.value
         })
