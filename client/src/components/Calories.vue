@@ -1,6 +1,14 @@
 <template>
     <section class="container animeLeft third">
-        <TheTitle>Qualidade do sono</TheTitle>
+        <TheTitle>Calorias</TheTitle>
+        <div class="flex">
+            <div class="flex align-center gap-5">
+                <Fire></Fire>
+                <span class="data">
+                    {{ 1200 }} kcal
+                </span>
+            </div>
+        </div>
         <div id="chart">
             <apexchart type="rangeBar" height="350" :options="chartOptions" :series="series"></apexchart>
         </div>
@@ -9,36 +17,37 @@
 
 <script setup lang="ts">
 import TheTitle from './layout/TheTitle.vue';
+import Fire from '../assets/icons/fire.svg'
 
 const series = ([
     {
-    data: [
+        data: [
             {
                 x: 'Domingo',
                 y: [
-                new Date('2019-03-02').getTime(),
-                new Date('2019-03-04').getTime()
+                    new Date('2019-03-02').getTime(),
+                    new Date('2019-03-04').getTime()
                 ]
             },
             {
                 x: 'Segunda',
                 y: [
-                new Date('2019-03-04').getTime(),
-                new Date('2019-03-08').getTime()
+                    new Date('2019-03-04').getTime(),
+                    new Date('2019-03-08').getTime()
                 ]
             },
             {
                 x: 'Terça',
                 y: [
-                new Date('2019-03-08').getTime(),
-                new Date('2019-03-12').getTime()
+                    new Date('2019-03-08').getTime(),
+                    new Date('2019-03-12').getTime()
                 ]
             },
             {
                 x: 'Quarta',
                 y: [
-                new Date('2019-03-12').getTime(),
-                new Date('2019-03-18').getTime()
+                    new Date('2019-03-12').getTime(),
+                    new Date('2019-03-18').getTime()
                 ]
             }
         ]
@@ -52,7 +61,7 @@ const chartOptions = ({
     },
     plotOptions: {
         bar: {
-        horizontal: true
+            horizontal: true
         }
     },
     xaxis: {
@@ -61,6 +70,4 @@ const chartOptions = ({
 });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
