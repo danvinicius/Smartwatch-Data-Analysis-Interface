@@ -18,5 +18,9 @@ footer {
     justify-content: center;
     align-items: center;
     padding: 2rem;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 </style>

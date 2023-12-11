@@ -1,27 +1,27 @@
 <template>
     <section class="container animeLeft second">
-        <TheTitle>Passos e corrida</TheTitle>
+        <TheTitle>Passos</TheTitle>
         <div class="flex align-start gap-1 flex-column margin-bottom-1">
             <div class="flex align-center gap-5">
-                <PersonRunning></PersonRunning>
+                <PersonRunning class="icon"></PersonRunning>
                 <span class="data">
                     {{ 19 }} km
                 </span>
             </div>
             <div class="flex align-center gap-5">
-                <Steps></Steps>
+                <Steps class="icon"></Steps>
                 <span class="data">
-                    {{ 2509 }} passos
+                    {{ mostRecentStepCountSumValue }} passos
                 </span>
             </div>
             <div class="flex align-center gap-5">
-                <Speed></Speed>
+                <Speed class="icon"></Speed>
                 <span class="data">
                     {{ 24 }} km/h
                 </span>
             </div>
         </div>
-        <VaCollapse v-model="value" class="min-w-96" header="Ver histórico de passos">
+        <VaCollapse v-model="isActive" class="min-w-96" header="Ver histórico de passos">
             <div id="chart">
                 <apexchart type="bar" height="380" :options="chartOptions" :series="series"></apexchart>
             </div>
@@ -30,28 +30,54 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import TheTitle from './layout/TheTitle.vue';
 import PersonRunning from '../assets/icons/person-running.svg'
 import Steps from '../assets/icons/steps.svg'
 import Speed from '../assets/icons/speed.svg'
 
-const value = ref(false)
-const series = ([
-    {
-        name: 'passos',
-        data: [
-            { x: '01/01/2019', y: 400 },
-            { x: '04/01/2019', y: 430 },
-            { x: '07/01/2019', y: 448 },
-            { x: '10/01/2019', y: 470 },
-            { x: '01/01/2020', y: 540 },
-            { x: '04/01/2020', y: 580 },
-            { x: '07/01/2020', y: 690 },
-            { x: '10/01/2020', y: 690 },
-        ],
-    },
-]);
+import { useData } from '../composables/useData';
+const { groupDataByDay } = useData()
+
+const stepCountRate = ref<any>();
+
+const series = ref<any[]>([]);
+
+const mostRecentStepCount = ref()
+const mostRecentStepCountSumValue = ref(0)
+
+onMounted(async () => {
+    const response = await fetch('src/api/step-count.json', {
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    })
+    const responseData = await response.json();
+    if (responseData && responseData?.data) {
+        const groupedData = groupDataByDay(responseData.data);
+
+        stepCountRate.value = groupedData;
+
+        // Criar o array de objetos {x, y} para o gráfico
+        const chartData = Object.keys(groupedData).map((date) => {
+            const sum = groupedData[date].reduce((acc, point) => acc + point.value, 0);
+            return { x: date, y: sum };
+        });
+
+        series.value.push({
+            name: 'passos',
+            data: chartData,
+        });
+
+        mostRecentStepCount.value = Object.entries(stepCountRate.value)[Object.entries(stepCountRate.value).length-1][1]
+        mostRecentStepCount.value.forEach((sc: any) => {
+            mostRecentStepCountSumValue.value += sc.value
+        })
+    }
+});
+
+const isActive = ref(false)
 
 const chartOptions = ({
     chart: {
@@ -66,8 +92,6 @@ const chartOptions = ({
                 fontWeight: 700,
             },
             groups: [
-                { title: '2019', cols: 4 },
-                { title: '2020', cols: 4 },
             ],
         },
     },

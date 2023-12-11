@@ -1,45 +1,15 @@
-interface HeartRateDataPoint {
+export interface DataPoint {
   value: number;
   time: number;
 }
 
-interface SpeedDataPoint {
-  value: number;
-  time: number;
+export interface ResponseData {
+  data: DataPoint[];
 }
 
-interface StepCountDataPoint {
-  value: number;
-  time: number;
-}
-
-interface CaloriesRateDataPoint {
-  value: number;
-  time: number;
-}
-interface BioImpedance {
-  height: number;
-  weight: number;
-  imc: number;
-}
-interface ResponseData {
-  heartRate: {
-    dataPoints: HeartRateDataPoint[];
-  };
-  caloriesRate: {
-    dataPoints: CaloriesRateDataPoint[];
-  };
-  stepCountRate: {
-    dataPoints: SpeedDataPoint[];
-  };
-  speedRate: {
-    dataPoints: StepCountDataPoint[];
-  };
-  bioimpedance: BioImpedance;
-}
+const url = "http://localhost:8080/api/data";
 
 export function useApi() {
-  const url = "http://localhost:8080/api";
   const fetchHeartRate = async (): Promise<ResponseData> => {
     const res = await fetch(`${url}/rate/heart`);
     const json = await res.json();
@@ -55,17 +25,20 @@ export function useApi() {
     const json = await res.json();
     return json;
   };
-  const fetchStepCountRate = async (): Promise<ResponseData> => {
+  async function fetchStepCountRate (): Promise<ResponseData> {
     const res = await fetch(`${url}/rate/step-count`);
+    console.log(res);
     const json = await res.json();
+    console.log(json);
     return json;
   };
   const fetchCaloriesRate = async (): Promise<ResponseData> => {
     const res = await fetch(`${url}/rate/calories`);
+    
     const json = await res.json();
     return json;
   };
-  const fetchBioimpedance = async (): Promise<ResponseData> => {
+  const fetchBMI = async (): Promise<ResponseData> => {
     const res = await fetch(`${url}/bioimpedance`);
     const json = await res.json();
     return json;
@@ -78,6 +51,6 @@ export function useApi() {
     fetchDistanceRate,
     fetchStepCountRate,
     fetchCaloriesRate,
-    fetchBioimpedance,
+    fetchBMI,
   };
 }

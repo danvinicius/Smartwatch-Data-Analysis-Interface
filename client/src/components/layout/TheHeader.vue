@@ -17,5 +17,10 @@ header {
     display: flex;
     align-items: center;
     box-shadow: 0 1px 10px #ccc;
+
+    svg {
+        width: initial;
+        height: initial;
+    }
 }
 </style>

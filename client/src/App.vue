@@ -4,7 +4,7 @@
     <CardiacData></CardiacData>
     <Steps></Steps>
     <Calories></Calories>
-    <Bioimpedance></Bioimpedance>
+    <BMI></BMI>
   </main>
   <TheFooter></TheFooter>
 </template>
@@ -15,7 +15,7 @@ import TheFooter from './components/layout/TheFooter.vue'
 import CardiacData from './components/CardiacData.vue';
 import Steps from './components/Steps.vue';
 import Calories from './components/Calories.vue';
-import Bioimpedance from './components/Bioimpedance.vue';
+import BMI from './components/BMI.vue';
 </script>
 
 <style scoped>

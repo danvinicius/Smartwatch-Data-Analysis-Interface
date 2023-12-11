@@ -3,7 +3,7 @@
     <TheTitle>Dados cardíacos</TheTitle>
     <div class="flex margin-bottom-1">
       <div class="flex align-center gap-5">
-        <Heart></Heart>
+        <Heart class="icon"></Heart>
         <span class="data">
           {{ heartRate }} bpm
         </span>
