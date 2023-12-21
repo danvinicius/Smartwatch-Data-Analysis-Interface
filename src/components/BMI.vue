@@ -4,13 +4,13 @@
         <Loading v-if="loading"></Loading>
         <div v-else class="flex align-start gap-1 flex-column margin-bottom-1">
             <div class="flex align-center gap-5" v-if="bmi">
-                <Weight></Weight>
+                <Weight class="icon"></Weight>
                 <span class="data">
                     {{ bmi.weight.toFixed(1) }}kg
                 </span>
             </div>
             <div class="flex align-center gap-5" v-if="bmi">
-                <Height></Height>
+                <Height class="icon"></Height>
                 <span class="data">
                     {{ bmi.height.toFixed(2) }}m
                 </span>
@@ -19,7 +19,6 @@
 
         <div class="info margin-bottom-1" v-if="bmi">
             <div class="flex gap-75">
-                <Medal class="icon" style="margin-top: .15rem"></Medal>
                 <p v-if="bmi.imc <= 18.5">Seu IMC está <span class="warning">abaixo do normal.</span> ({{ bmi.imc.toFixed(2)
                 }})
                 </p>
@@ -44,7 +43,6 @@ import { onMounted, ref } from 'vue';
 import TheTitle from './layout/TheTitle.vue';
 import Weight from '../assets/icons/weight.svg'
 import Height from '../assets/icons/height.svg'
-import Medal from '../assets/icons/medal.svg'
 import Loading from './layout/Loading.vue'
 import { BMI, useApi } from '../composables/useApi';
 const { fetchBMI } = useApi()
