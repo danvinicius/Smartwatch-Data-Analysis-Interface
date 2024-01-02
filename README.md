@@ -9,7 +9,5 @@ College work made to help users to visualize their smartwatch data in a friendly
 <br/>
 
 ## Project status
-<h4> 
-    ✅ Finished ✅
-</h4>
+✅ Finished ✅
 <br/>
