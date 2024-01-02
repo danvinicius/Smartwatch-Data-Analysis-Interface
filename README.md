@@ -4,10 +4,14 @@ College work made to help users to visualize their smartwatch data in a friendly
 <div style="display: inline_block"><br>
     <img align="center" alt="VueJS" title="VueJS" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/vuejs/vuejs-original.svg">
     <img align="center" alt="Typescript" title="Typescript" height="30" width="40" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg">
-    
 </div>
 <br/>
 
 ## Project status
 ✅ Finished ✅
+
+<div style="display: inline_block"><br>
+    <img src="printscreen_mobile.png" width="450"/>
+    <img src="design_system.png" width="350"/>
+</div>
 <br/>
